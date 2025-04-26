@@ -11,46 +11,33 @@ const menu = new menuPage()
 const maintenance = new maintenancePage()
 const myInfo = new myInfoPage()
 
-describe('Orange HRM Tests', () => {
-  const selectorList = {
-    
-    firstName: "[name='firstName']",
-    middleName: "[name='middleName']",
-    lastName: "[name='lastName']",
-    genericField: ".oxd-input--active",
-    dateField: "[placeholder='yyyy-dd-mm']",
-    dateCloseButton: ".--close",
-    saveButton: ".oxd-button--secondary[data-v-6653c066=''][type='submit']",
-    genericCombobox: ".oxd-select-wrapper",
-    radioOption: ".oxd-radio-wrapper"
-  }
+const Chance = require('chance');
+const chance = new Chance();
 
-  it.only('User Info Update - Success', () => {
+describe('Orange HRM Tests', () => {
+
+  it('User Info Update - Success', () => {
     login.accessLoginPage()
     login.loginWithUser(userData.userSuccess.username, userData.userSuccess.password)
     dashboard.checkDashboardPage()
-    menu.accessAdminPage()
-    menu.accessPimPage()
-    menu.accessLeavePage()
-    menu.accessTimePage()
-    menu.accessRecruitmentPage()
+    // menu.accessAdminPage()
+    // menu.accessPimPage()
+    // menu.accessLeavePage()
+    // menu.accessTimePage()
+    // menu.accessRecruitmentPage()
     menu.accessMyInfoPage()
-    myInfo.writeFields()
-    menu.accesPerfomancePage()
-    menu.accessDashboardPage()
-    menu.accessDirectoryPage()
-    menu.accessMaintenancePage()
-    maintenance.clickCancelButton()
-    menu.accessClaimPage()
-    menu.accessBuzzPage()
-  })
-  
-  it('Login - Failed', () => {
-    cy.visit('/auth/login')
-    cy.get(selectorList.usernameField).type(userData.userFail.username)
-    cy.get(selectorList.passwordField).type(userData.userFail.password)
-    cy.get(selectorList.loginButton).click()
-    cy.get(selectorList.wrongCredentialAlert) 
+    myInfo.fillName( chance.first(), chance.last())
+    myInfo.fillEmployeeDetails("29", "otherID", "77", "1995-28-09", "1995-28-09")
+    myInfo.fillPersonDetails("Brazilian", "Married", "O+")
+    myInfo.saveForm()
+
+    // menu.accesPerfomancePage()
+    // menu.accessDashboardPage()
+    // menu.accessDirectoryPage()
+    // menu.accessMaintenancePage()
+    // maintenance.clickCancelButton()
+    // menu.accessClaimPage()
+    // menu.accessBuzzPage()
   })
 })
 

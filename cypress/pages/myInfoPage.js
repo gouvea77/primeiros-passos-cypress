@@ -3,9 +3,9 @@ class myInfoPage {
     const selectors = {
       wrongCredentialAlert: "[role='alert']",
       myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
-      firstName: "[name='firstName']",
-      middleName: "[name='middleName']",
-      lastName: "[name='lastName']",
+      firstNameField: "[name='firstName']",
+      middleNameField: "[name='middleName']",
+      lastNameField: "[name='lastName']",
       genericField: ".oxd-input--active",
       dateField: "[placeholder='yyyy-dd-mm']",
       dateCloseButton: ".--close",
@@ -21,23 +21,32 @@ class myInfoPage {
     cy.get(this.selectorList().myInfoButton).click()
   }
 
-  writeFields(username, password){
-    cy.get(this.selectorList().firstName).clear().type("Gabriel")
-    cy.get(this.selectorList().middleName).clear()
-    cy.get(this.selectorList().lastName).clear().type("Gouvea")
-    cy.get(this.selectorList().genericField).eq(3).clear().type("256804")
-    cy.get(this.selectorList().genericField).eq(4).clear().type("77")
-    cy.get(this.selectorList().genericField).eq(5).clear().type("DriveLicense29")
-    cy.get(this.selectorList().dateField).eq(0).clear().type("2025-13-04")
-    cy.get(this.selectorList().dateCloseButton).click()
-    cy.get(this.selectorList().dateField).eq(1).clear().type("2025-13-04")
-    cy.get(this.selectorList().dateCloseButton).click()
-    cy.get(this.selectorList().saveButton).click()
-    cy.get(this.selectorList().genericCombobox).eq(0).click().contains("Brazilian").click()
-    cy.get(this.selectorList().genericCombobox).eq(1).click().contains("Single").click({force: true})
-    cy.get(this.selectorList().radioOption).eq(0).click()
-    cy.get(this.selectorList().genericCombobox).eq(2).click().contains("B+").click()
+  fillName(firstName, lastNameField ){
+    cy.get(this.selectorList().firstNameField).clear().type(firstName)
+    cy.get(this.selectorList().middleNameField).clear()
+    cy.get(this.selectorList().lastNameField).clear().type(lastNameField)
 
+  }
+
+  fillEmployeeDetails(employeeId, otherID, driversLicenseDate, licenseDate, dateOdBirth){
+    cy.get(this.selectorList().genericField).eq(3).clear().type(employeeId)
+    cy.get(this.selectorList().genericField).eq(4).clear().type(otherID)
+    cy.get(this.selectorList().genericField).eq(5).clear().type(driversLicenseDate)
+    cy.get(this.selectorList().dateField).eq(0).clear().type(licenseDate)
+    cy.get(this.selectorList().dateCloseButton).click()
+    cy.get(this.selectorList().dateField).eq(1).clear().type(dateOdBirth)
+    cy.get(this.selectorList().dateCloseButton).click()
+  }
+
+  saveForm(){
+    cy.get(this.selectorList().saveButton).click()
+  }
+
+  fillPersonDetails(nationality, martialStatus, bloodType){
+   cy.get(this.selectorList().genericCombobox).eq(0).click().contains(nationality).click()
+    cy.get(this.selectorList().genericCombobox).eq(1).click().contains(martialStatus).click({force: true})
+    cy.get(this.selectorList().radioOption).eq(0).click()
+    cy.get(this.selectorList().genericCombobox).eq(2).click().contains(bloodType).click()
   }
 }
 
